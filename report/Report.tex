@@ -1,8 +1,12 @@
 \documentclass{article}
 \usepackage{graphicx}
 \usepackage[hidelinks]{hyperref}
+\usepackage[all]{hypcap}
+\usepackage{svg}
+\usepackage{float}
+\usepackage{xcolor}
 
-\title{financeHelper Report}
+\title{FinanceHelper Report}
 \author{Johnson Chen}
 \date{July 2026}
 
@@ -11,6 +15,7 @@
 \maketitle
 
 \tableofcontents
+\newpage
 
 \section{Introduction}
 This is an individual project made by me in July 2026. The purpose of this project is to make a program that takes user input to record (locally) a history of how much money they are spending, and provide insight into the data collected via graphs and pie charts ranging over selected periods of time. This report aims to cover the entire process of this project, including planning and conclusions.
@@ -23,9 +28,45 @@ For this program to be convenient, I plan to make a clear user interface where p
 \subsection{Stakeholders}
 To start, I would like to make this program available on laptops/PC first for simplicity which means my audience would need access to a laptop, this is perfect for most students as they should have access to a laptop and it also means anyone, even if they are not a student, can access this software and make use of it therefore my stakeholders are not limited to only students. After developing this, I can also make it more portable by adding support for mobile as this would further increase the variety of my audience and make it a lot more user-friendly since it means you can track your finances and check your history in situations where a laptop may not be convenient to have out, I think this will further increase its usefulness.
 As I am in university, my stakeholders will consist mostly of students (my peers) as I have a significant amount of contact hours with them, meaning I can get responses and feedback quickly. \newline
-I have chosen a group of students (but not limited to them) to reflect my target audience, this consists of: \textbf{Ivana} and \textbf{Yi-Ming}, who are studying \textit{Medicine}, \textbf{Johnny}, who is studying \textit{Electronic Engineering}, and \textbf{Freya}, who is studying \textit{Biochemistry}. As I have a variety of students from different courses as my stakeholders, I can say that they form a decent representation of the student population. A variety of students also comes with various spending habits and preferences, making them good for obtaining feedback from, which will further enhance the user experience of the application as it will be tailored to different kinds of audiences. \newline
+I have chosen a group of students (but not limited to them) to reflect my target audience, this consists of: \textbf{Ivana} and \textbf{Yi Ming}, who are studying \textit{Medicine}, \textbf{Johnny}, who is studying \textit{Electronic Engineering}, and \textbf{Freya}, who is studying \textit{Biochemistry}. As I have a variety of students from different courses as my stakeholders, I can say that they form a decent representation of the student population. A variety of students also comes with various spending habits and preferences, making them good for obtaining feedback from, which will further enhance the user experience of the application as it will be tailored to different kinds of audiences. \newline
 I have regular contact with this group, living with some of them during term-time and some during holidays, making it very convenient for both parties as they can find me if they have issues with the software and I can find them to get feedback. I am also able to share this project with the people in my course, \textit{Computing}, to get further feedback.
 
+\subsection{Computational Approaches to the Problem}
+Computational methods can easily be used when coding the solution, the use of decomposition to code individual components of the program for example. I can also use various methods to simplify the path towards the solution by applying them when planning.
 
+\subsubsection{Planning Ahead}
+To give structure to my solution, I need to plan what features to implement as well as what I want to use to achieve this, this doesn't need to include a lot of details for now and more features may be added later on. \newline \newline
+\textbf{Planning}:
+\begin{itemize}
+    \item \textit{Programming Language}: I will be using \textbf{Kotlin} to program my solution, this is so I can gain a deeper understanding of the language by using it to solve real world problems.
+    \item \textit{User Input 1}: The software should be able to detect \textbf{tap gestures} to allow the user to navigate through different parts of the program.
+    \item \textit{User Input 2}: \textbf{Keyboard input}. When entering how much they have spent since the last time they used the software, only \textbf{numbers} should be accepted. When creating a new category of item, only \textbf{alphanumerical} text should be accepted.
+    \item \textit{User Input 3}: User can select \textbf{time frame} they want a summary for.
+    \item \textit{Accepting User Input}: Via \textbf{text boxes} and \textbf{buttons}.
+    \item \textit{Text Output 1}: Prompt for user input.
+    \item \textit{Text Output 2}: Simple user interface, \textbf{buttons} to navigate to sections of program.
+    \item \textit{Output Summary 1}: \textbf{Line graph} to display history. Possibly an option to display a \textbf{bar chart} instead.
+    \item \textit{Output Summary 2}: \textbf{Pie chart} with colour-coded \textbf{categories}.
+    \item \textit{Output Summary 3}: Statistics such as \textbf{total} spent in that time frame and \textbf{mean/median/range}.
+    \item \textit{Quality of Life 1}: \textbf{Back buttons} to help the user navigate to the previous section of the program.
+    \item \textit{Quality of Life 2}: Option to change the time frame while viewing the summary.
+\end{itemize}
+
+
+\subsubsection{Use of Decomposition}
+Through decomposition, I can break the problem down into smaller subproblems allowing for clearer objectives to be set and more checkpoints to be available. This is useful as if there is a bug in the program, it will be easily identifiable as I will be able to see the exact area of code that corresponds to the feature that doesn't work. Features will also be easier to implement as the problems that result from decomposition will be simpler and therefore take less time to implement. Decomposition also benefits the modularity of code as some subproblems may be independent from each other. I made a decomposition diagram for the program shown in \color{blue} \textbf{\hyperref[fig:FHDecomp]{Figure 1}} \color{black} below:
+
+\begin{figure}[H]
+    \centering
+    \includesvg[width=0.6\linewidth]{FHDecomposition}
+    \caption{Decomposition Diagram of FinanceHelper}
+    \label{fig:FHDecomp}
+\end{figure}
+
+\subsubsection{Code Modularity}
+Code Modularity is applicable as there are a lot of features that are independent from each other, such as generating the summary and the graph, which not only allows these features to be developed concurrently, but also makes it easier to organize the code into separate functions and files and linking them together.
+\subsubsection{Use of Abstraction}
+
+\subsubsection{Use of Algorithms}
 
 \end{document}
