@@ -6,6 +6,8 @@
 \usepackage{float}
 \usepackage{xcolor}
 
+\newcommand{\jumpTo}[1]{\textcolor{blue}{#1}}
+
 \title{FinanceHelper Report}
 \author{Johnson Chen}
 \date{July 2026}
@@ -22,11 +24,11 @@ This is an individual project made by me in July 2026. The purpose of this proje
 
 \section{Analysis}
 \subsection{Outline of the Problem}
-As a student, I have used Microsoft Excel to record my finances, but Excel can be difficult to learn alongside my studies, and many issues make it hard to use conveniently, such as money being deposited at different days of the month and not necessarily every month. Many of my peers also find Excel difficult to use and, although useful, not all of them track their finances or know how to budget effectively. I would like to implement a solution to this problem by making it more convenient for students to track their spending, which will hopefully give them insight into their spending habits leading to better budgeting and financial choices, resulting in an improved quality of life for students.
+As a university student, I have used Microsoft Excel to record my finances, but Excel can be difficult to learn alongside my studies, and many issues make it hard to use conveniently, such as money being deposited at different days of the month and not necessarily every month. Many of my peers also find Excel difficult to use and, although useful, not all of them track their finances or know how to budget effectively. I would like to implement a solution to this problem by making it more convenient for students to track their spending, which will hopefully give them insight into their spending habits leading to better budgeting and financial choices, resulting in an improved quality of life for students.
 For this program to be convenient, I plan to make a clear user interface where people can interact by entering input and tapping buttons to navigate to other areas of the application. To make the program insightful towards its users, I plan to add graph features where you can select the time frame (beginning to end) and see a graph alongside a summary of their spending with a pie chart. When entering an amount of money, users can also decide to create a category for that item which will be shown in the summary and the pie chart.
 
 \subsection{Stakeholders}
-To start, I would like to make this program available on laptops/PC first for simplicity which means my audience would need access to a laptop, this is perfect for most students as they should have access to a laptop and it also means anyone, even if they are not a student, can access this software and make use of it therefore my stakeholders are not limited to only students. After developing this, I can also make it more portable by adding support for mobile as this would further increase the variety of my audience and make it a lot more user-friendly since it means you can track your finances and check your history in situations where a laptop may not be convenient to have out, I think this will further increase its usefulness.
+To start, I would like to make this program available on mobile as it will allow me to have a much wider audience since everybody has access to a phone, this means that my audience is not limited to only students and is instead most of the population. Making software available for mobile increases its portability as users can interact with it while they are "on the go", making the software more useful than if it was available on laptops only since they would need to wait until it is convenient to use it; people also do not have laptops available to them all the time meaning they would likely have to wait to be able to log their spending into the application leading to some forgetting to do so or some being less encouraged to use it. 
 As I am in university, my stakeholders will consist mostly of students (my peers) as I have a significant amount of contact hours with them, meaning I can get responses and feedback quickly. \newline
 I have chosen a group of students (but not limited to them) to reflect my target audience, this consists of: \textbf{Ivana} and \textbf{Yi Ming}, who are studying \textit{Medicine}, \textbf{Johnny}, who is studying \textit{Electronic Engineering}, and \textbf{Freya}, who is studying \textit{Biochemistry}. As I have a variety of students from different courses as my stakeholders, I can say that they form a decent representation of the student population. A variety of students also comes with various spending habits and preferences, making them good for obtaining feedback from, which will further enhance the user experience of the application as it will be tailored to different kinds of audiences. \newline
 I have regular contact with this group, living with some of them during term-time and some during holidays, making it very convenient for both parties as they can find me if they have issues with the software and I can find them to get feedback. I am also able to share this project with the people in my course, \textit{Computing}, to get further feedback.
@@ -38,7 +40,7 @@ Computational methods can easily be used when coding the solution, the use of de
 To give structure to my solution, I need to plan what features to implement as well as what I want to use to achieve this, this doesn't need to include a lot of details for now and more features may be added later on. \newline \newline
 \textbf{Planning}:
 \begin{itemize}
-    \item \textit{Programming Language}: I will be using \textbf{Kotlin} to program my solution, this is so I can gain a deeper understanding of the language by using it to solve real world problems.
+    \item \textit{Programming Language}: I will be using \textbf{Swift} on the XCode IDE to program my solution, this is so I can gain a deeper understanding of the language by using it to solve real world problems. Also, Swift allows me to build applications for IOS which is useful as all of my stakeholders use IOS devices such as Macbooks and Iphones. \textit{Kotlin} may also be a good idea if I want to add support for Android devices in the future, and \textit{Python} may be good if I want to add support for laptops.
     \item \textit{User Input 1}: The software should be able to detect \textbf{tap gestures} to allow the user to navigate through different parts of the program.
     \item \textit{User Input 2}: \textbf{Keyboard input}. When entering how much they have spent since the last time they used the software, only \textbf{numbers} should be accepted. When creating a new category of item, only \textbf{alphanumerical} text should be accepted.
     \item \textit{User Input 3}: User can select \textbf{time frame} they want a summary for.
@@ -54,7 +56,7 @@ To give structure to my solution, I need to plan what features to implement as w
 
 
 \subsubsection{Use of Decomposition}
-Through decomposition, I can break the problem down into smaller subproblems allowing for clearer objectives to be set and more checkpoints to be available. This is useful as if there is a bug in the program, it will be easily identifiable as I will be able to see the exact area of code that corresponds to the feature that doesn't work. Features will also be easier to implement as the problems that result from decomposition will be simpler and therefore take less time to implement. Decomposition also benefits the modularity of code as some subproblems may be independent from each other. I made a decomposition diagram for the program shown in \color{blue} \textbf{\hyperref[fig:FHDecomp]{Figure 1}} \color{black} below:
+Through decomposition, I can break the problem down into smaller subproblems allowing for clearer objectives to be set and more checkpoints to be available. This is useful as if there is a bug in the program, it will be easily identifiable as I will be able to see the exact area of code that corresponds to the feature that doesn't work. Features will also be easier to implement as the problems that result from decomposition will be simpler and therefore take less time to implement. Decomposition also benefits the modularity of code as subproblems can be organized into functions based on the structure of the decomposition. I made a decomposition diagram for the program shown in \jumpTo{\textbf{\hyperref[fig:FHDecomp]{Figure 1}}} below:
 
 \begin{figure}[H]
     \centering
@@ -64,9 +66,196 @@ Through decomposition, I can break the problem down into smaller subproblems all
 \end{figure}
 
 \subsubsection{Code Modularity}
-Code Modularity is applicable as there are a lot of features that are independent from each other, such as generating the summary and the graph, which not only allows these features to be developed concurrently, but also makes it easier to organize the code into separate functions and files and linking them together.
+Code Modularity is applicable as there are a lot of features that can be implemented as separate functions, such as generating the summary and the graph, which not only allows these features to be developed concurrently, but also makes it easier to organize the code clearly and into different files, creating the final program by linking them together. This is still useful even if multiple features depend on the same part, as you can develop the shared component first. There is also a high chance of modules being independent from each other allowing the use of threads to speed up execution. Below is a graph of a small section of the solution, modularized, each node can be thought of as a function:
+
+\begin{figure}[H]
+    \centering
+    \includesvg[width=0.9\linewidth]{ModDAG}
+    \caption{A Directed Acyclic Graph (DAG) showing modularization}
+    \label{fig:ModularDAG}
+\end{figure}
+
 \subsubsection{Use of Abstraction}
+Through abstraction, the user(s) don't know (or care) about the details of the code which makes up the program they are using as they only need to interact with the user interface. I may also use libraries and frameworks to access prewritten code to generate graphs which is another form of abstraction and it makes it a lot easier to implement my solution as having to code separate logic to generate a graph means it would take longer to implement the solution. The graphical user interface (GUI) doesn't have to look amazing either, functionality is important and making the software look good is low priority but may be useful in making it more interesting to the audience.
 
 \subsubsection{Use of Algorithms}
+The use of algorithms here is quite limited, but there are some that may be applicable.
+Since the program will mostly be about numbers, we can gather the money spent on each day of the time frame (floats) and sort it to make calculating the median and range of the data easier. \newline
+Here are some sorts that I could use. \newline
+\textbf{Sorts}:
+\begin{itemize}
+    \item \textit{Bubble Sort}: Simple but very slow, $O(n^2)$ time complexity on average.
+    \item \textit{Insertion Sort}: Better, but still $O(n^2)$ time complexity on average.
+    \item \textit{Quick Sort}: Good, $O(nlog(n))$ time complexity on average.
+\end{itemize}
+Although calculating the statistics don't require searching algorithms as we only need to access the middle, lowest and highest values after sorting, we may need to search for specific dates (the beginning and end) in a data structure that has sorted the data by the date. There are a few examples of what the data structure could be (as it is not yet decided), for instance we could use a binary tree or a list/array.\newline
+If the data structure is a list, we would use searching algorithms to find the date. \newline
+\textbf{Searches}:
+\begin{itemize}
+    \item \textit{Linear Search}: Very slow for large data, $O(n)$ on average.
+    \item \textit{Binary Search}: Very good, and usable as the data will be sorted by date, $O(log(n))$ on average.
+\end{itemize}
+If the data structure is a (binary) tree, we can use traversing algorithms to find all of the dates in a time frame, but this requires traversing the entire tree or at least most of it since you can discard some routes that you are sure that no valid dates exist for. The order of adding items to the tree would also vary the efficiency since the tree is unlikely to be "balanced" in which case traversals will no longer discard half the data each time and instead (in the worst case) discard one at a time essentially being turning into a linked list. I also have to make sure that the binary tree is sorted at all times, which shouldn't be an issue as you just have to insert items in the correct place. \newline
+\textbf{Traversals}:
+\begin{itemize}
+    \item \textit{Breadth-First Search}: Records all connected nodes to the first node in a queue (then removes it), adds those to the queue and repeats until the queue is empty.
+    \item \textit{Depth-First Search}: Traverse left if possible, if not then traverse right if possible, if not then record current node as visited, backtrack and repeat.
+\end{itemize}
+Depth-first search doesn't have to go left first, it can try right first and then left if failed. I can make this algorithm more efficient by determining which path to take based on the date I need as the tree will be sorted. I think both algorithms are as useful as each other and one may prove to be better than the other when put into practice but we will see...
+
+\subsection{Research}
+Researching about the solution is not about finding the answer straight away, but to find the resources to put together to form the solution. This will consist of interviews/questionnaires with my stakeholders and general research about Swift libraries and frameworks including how to create a user interface and produce graphs.
+
+\subsubsection{Questionnaire Format and Plan}
+My plan is to send out a form (made on Microsoft Forms) to my stakeholders to get all of their responses in one place so that it is organized, the software also gives me statistics such as pie charts and number of responses to multiple choice questions making it easy to understand the responses from large audiences. Here are the questions I have made: \newline \newline
+\textbf{QUESTIONS:} \newline
+\textit{Do you use Microsoft Excel?}
+\begin{itemize}
+    \item Yes
+    \item No
+\end{itemize}
+\textit{If yes, how would you rate your experience with it?}
+\begin{itemize}
+    \item 1 (Bad)
+    \item 2
+    \item 3
+    \item 4
+    \item 5 (Good)
+    \item N/A
+\end{itemize}
+\textit{Why? (easy/difficult to use etc.)}
+\begin{itemize}
+    \item \textbf{Open-ended question}
+\end{itemize}
+\textit{If you \textbf{don't} use Excel, why?}
+\begin{itemize}
+    \item \textbf{Open-ended question}
+\end{itemize}
+\textit{What do you use Microsoft Excel for? (multiple choice)}
+\begin{itemize}
+    \item Work
+    \item Finance
+    \item Other: \textbf{Open-ended}
+\end{itemize}
+\textit{If you \textbf{don't} use Microsoft Excel for finances, why?}
+\begin{itemize}
+    \item \textbf{Open-ended question}
+\end{itemize}
+\textit{Do you track your finances in a different way? If so how?}
+\begin{itemize}
+    \item \textbf{Open-ended question}
+\end{itemize}
+\textit{How easy is it for you to track your finances at the moment?}
+\begin{itemize}
+    \item 1 (Difficult)
+    \item 2
+    \item 3
+    \item 4
+    \item 5 (Easy)
+\end{itemize}
+\textit{Why is that the case?}
+\begin{itemize}
+    \item \textbf{Open-ended question}
+\end{itemize}
+\textit{What would you want out of a finance tracker application? (Features, how convenient it is to use etc.)}
+\begin{itemize}
+    \item \textbf{Open-ended question}
+\end{itemize}
+The responses were collected on: 19/07/2026 \newline
+Number of responses: 4/4 \newline \newline
+\textbf{RESPONSES:} \newline
+\textit{Do you use Microsoft Excel?}
+\begin{itemize}
+    \item \textbf{Yes}: 3
+    \item \textbf{No}: 1
+\end{itemize}
+\textit{If yes, how would you rate your experience with it?}
+\begin{itemize}
+    \item \textbf{1 (Bad)}: 2
+    \item \textbf{3}: 1
+    \item \textbf{N/A}: 1
+\end{itemize}
+\textit{Why? (easy/difficult to use etc.)}
+\begin{itemize}
+    \item "Too many shortcuts that I don’t know about, very time consuming"
+    \item "Very difficult to use, poor user experience"
+    \item "It’s ok, however it isn’t very intuitive thereby rendering the experience frustrating at many times."
+\end{itemize}
+\textit{If you don't use Excel, why?}
+\begin{itemize}
+    \item "I don't need to"
+\end{itemize}
+\textit{What do you use Microsoft Excel for? (multiple choice)}
+\begin{itemize}
+    \item \textbf{Work}: 3
+    \item \textbf{Finance}: 1
+    \item \textbf{Other}: "School projects/research" (1)
+\end{itemize}
+\textit{If you \textbf{don't} use Microsoft Excel for finances, why?}
+\begin{itemize}
+    \item "I don't feel the need to"
+    \item "I don’t keep track of my finances yet"
+\end{itemize}
+\textit{Do you track your finances in a different way? If so how?}
+\begin{itemize}
+    \item "I just look at my bank app"
+    \item "Pen and Paper"
+\end{itemize}
+\textit{How easy is it for you to track your finances at the moment?}
+\begin{itemize}
+    \item \textbf{2}: 1
+    \item \textbf{3}: 1
+    \item \textbf{4}: 1
+    \item \textbf{5 (Easy)}: 1
+\end{itemize}
+\textit{Why is that the case?}
+\begin{itemize}
+    \item "Not specific enough for each person's financial situation, normal calculating is fine but nothing more complicated"
+    \item "I use the table function which is similar"
+    \item "I don't spend too much"
+    \item "I could track it but I’m too lazy, and excel is a hassle to use"
+\end{itemize}
+\textit{What would you want out of a finance tracker application? (Features, how
+convenient it is to use etc.)}
+\begin{itemize}
+    \item "Convenient to use, easy to read, clear presentation of important values"
+    \item "Auto calculations, convenience, easy user interface"
+    \item "Convenience"
+    \item "Easy to use, feature rich (i.e. savings calculator, compound interest, tax, saving targets/goals, different pots for savings (car, house, miscellaneous like phone or something)), available on different platforms (iOS, android, Windows, Mac ect)"
+\end{itemize}
+
+\subsubsection{Review of the Questionnaire}
+Most of my stakeholders have used Microsoft Excel, and everyone at least knows what it is. Of those people who use Microsoft Excel, all of them feel that it is not very convenient to use or to learn at the moment as it is very time consuming, I agree that the initial learning phase may be slow and Excel may be more efficient as you gain experience with it. Surprisingly, there is a variety of methods being used to track finances among my stakeholders, pen and paper, mobile banking etc. meaning some people chose to use these instead of Excel. One person said that Excel is hard to use because everyone's financial situation is different leading them to choose different methods of financial tracking. Some people do not track finances as much as others, reasons for this include that they don't need to, or that they find it hard to do consistently. This questionnaire has given me insight into how my stakeholders' are handling their finances at the moment, and their opinions on both excel and their current methods of tracking it. Additionally, they have also provided me ideas into what features they want in the application, including enhancing the user friendliness of the application by making everything clear and readable, making the application convenient to use, and including features such as saving goals, saving pots and taxes. One stakeholder also suggested that the app could be made on multiple different platforms including Android and Windows, which may be something to pursue once the IOS version is finished.
+
+\subsubsection{Research into Swift: UI}
+In Swift, user interface elements are called \textbf{views}, these can be arranged in certain ways, and there are different types of views available such as \textit{text views}, \textit{image views} and \textit{buttons}. Views can be arranged using \textit{HStacks (horizontally)} and \textit{VStacks (vertically)} and you can also use \textit{NavigationStacks (stack)} and \textit{NavigationSplitViews (multiple columns)} to set how views are presented and transitioned when navigating through the application. All of this is available through the \textbf{SwiftUI} framework, which I will import into the code. Having all of these features available, it will be easy to create a simple, but effective, user interface, enhancing the user experience. Regarding input forms, I can also use a \textit{TextField} (included in SwiftUI) to take in input, although this only allows storing to variables which are volatile (as they are stored in RAM only) they will not save for the next session, so I will need to figure out how to store user input such as the spending data to carry them over between sessions. 
+
+\subsubsection{Research into Swift: Graphs and Pie Charts}
+I can use the framework: \textbf{Charts} which allows me to put graphs and pie charts into the application via the \textit{chart} view. This also allows me to colour code the pie, giving each category that the user creates a different colour making it more readable and user friendly. Swift's Charts framework additionally supports line graphs and bar charts making them easier to implement as well. Not only this, but it also allows sections of each bar (in the bar charts) to be colour coded by category. The keys for each colour showing what category they represent is called a \textbf{legend}. Normally, the colours that are used in the charts/graphs is chosen automatically, but you can also choose the colours yourself by using the \textit{chartForegroundStyleScale} modifier and giving it a list of mappings from \textit{name} to \textit{colour} (using the built-in struct: \textbf{Color}). I think it makes more sense to use colours for charts rather than graphs but if it is useful, I will use colours for my graphs when it is implemented.
+
+\section{Design}
+Now that the research is done, it is time to provide a blueprint of the solution so that I have a clear path to follow when implementing the system.
+
+\newpage % Perhaps delete this once project is over to see if it looks better, otherwise keep.
+\section{Archive of Figures}
+A list of all figures in this document.
+Tap on a figure to go to it.
+\begin{itemize}
+    \item \jumpTo{\textit{\hyperref[fig:FHDecomp]{Figure 1}}}: Decomposition Diagram
+    \item \jumpTo{\textit{\hyperref[fig:ModularDAG]{Figure 2}}}: Visualization of modularization using a DAG
+\end{itemize}
+
+\section{Citations (Sources)}
+\textbf{Diagrams:}
+\begin{itemize}
+    \item \textit{Figures 1 \& 2}: Made with \textbf{Draw.io}
+\end{itemize}
+\textbf{Research:}
+\begin{itemize}
+    \item \textit{Swift UI Research}: "\textbf{Get Started with Apps}" and "\textbf{Keep Going with Apps}" on \textbf{Swift Playground} (Mac)
+    \item \textit{Swift Graphs and Pie Charts Research}: Apple developer documentation on \href{https://developer.apple.com/documentation/charts}{\jumpTo{\textit{Charts framework}}}
+\end{itemize}
+
 
 \end{document}
+
