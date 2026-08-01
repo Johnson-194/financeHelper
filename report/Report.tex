@@ -5,6 +5,7 @@
 \usepackage{svg}
 \usepackage{float}
 \usepackage{xcolor}
+\usepackage{longtable}
 
 \newcommand{\jumpTo}[1]{\textcolor{blue}{#1}}
 
@@ -52,6 +53,7 @@ To give structure to my solution, I need to plan what features to implement as w
     \item \textit{Output Summary 3}: Statistics such as \textbf{total} spent in that time frame and \textbf{mean/median/range}.
     \item \textit{Quality of Life 1}: \textbf{Back buttons} to help the user navigate to the previous section of the program.
     \item \textit{Quality of Life 2}: Option to change the time frame while viewing the summary.
+    \item \textit{Quality of Life 3}: Ability to remove and edit expense data.
 \end{itemize}
 
 
@@ -239,6 +241,140 @@ The application would not be very useful if the data entered by the user is lost
 \section{Design}
 Now that the research is done, it is time to provide a blueprint of the solution so that I have a clear path to follow when implementing the system. The blueprints will consist of various diagrams such as flow charts to help with understanding how the program flow is supposed to be implemented.
 
+\subsection{Systems Architecture Diagram}
+Below is the systems diagram, it contains information about how the different components of the application will interact with each other and roughly what features are included in each component.
+\begin{figure}[H]
+    \centering
+    \includesvg[width=0.8\linewidth]{FHSystemsdiagram}
+    \caption{Systems Diagram for FinanceHelper}
+    \label{fig:SystemsDiagram}
+\end{figure}
+
+\subsection{Algorithm Design}
+I am going to design algorithms for my application, this will include flowcharts to describe the program flow and diagrams to show how the UI will be expected to look. Flowcharts begin on the next page.
+
+\subsubsection{Flowcharts}
+\begin{figure}[H]
+    \centering
+    \includesvg[width=0.7\linewidth]{MainPage}
+    \caption{A Flowchart of the Main Page}
+    \label{fig:MainPage}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includesvg[width=0.7\linewidth]{DataPage}
+    \caption{A Flowchart of the Edit Data Page}
+    \label{fig:DataPage}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includesvg[width=0.7\linewidth]{Delete}
+    \caption{A Flowchart of Deleting Data}
+    \label{fig:Delete}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includesvg[width=0.55\linewidth]{SummaryPage}
+    \caption{A Flowchart of the Summary Page}
+    \label{fig:SummaryPage}
+\end{figure}
+
+\subsubsection{Usability Features}
+I will be drawing the prototype design for all features of the application so that we have an idea of what it should look like and the things the program should contain.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\linewidth]{JULY Project Design.pdf}
+    \caption{Design of FinanceHelper's User Interface}
+    \label{fig:PageDesign}
+\end{figure}
+
+\subsection{Variables and Validation}
+I will be planning some variables that I will use alongside how to validate user input.
+\subsubsection{Variables}
+\begin{tabular}{|p{3cm}|p{2cm}|p{1cm}|p{4.4cm}|}
+    \hline
+    \textbf{Variable Name} & \textbf{Data Type} & \textbf{Scope} & \textbf{Purpose}\\
+    \hline
+    budgetMAX & Float & Global & To Keep track of User's max budget for the week/month, is persistent.\\
+    \hline
+    budgetCURRENT & Float & Global & To show the sum of the transaction amounts over the period of the budget.\\
+    \hline
+    budgetIsWeekly & Boolean & Global & To track whether the budget is over a week or a month, false = month.\\
+    \hline
+    Mean & Float & Local & Shown in the summary page, the average of the total amounts in the time frame.\\
+    \hline
+    Median & Float & Local & Shows the middle value among the total amounts in the time frame.\\
+    \hline
+    Range & Float & Local & Shows the range of the totals in the time frame.\\
+    \hline
+    Highest and Lowest & Float & Local & Show the maximum and minimum of the totals.\\
+    \hline
+\end{tabular}
+
+\subsubsection{Input Validation}
+\begin{tabular}{|p{4cm}|p{5cm}|}
+    \hline
+    Feature & Validation\\
+    \hline
+    Enter Amount & Must only contain numbers $\geq$ 0 (Can be decimal), no spaces.\\
+    \hline
+    Add Transaction & Amount and Category filled in.\\
+    \hline
+    Add Category & User can name their category anything.\\
+    \hline
+    Enter budget & Must be numbers $\geq$ 0 only. (Can be decimal)\\
+    \hline
+\end{tabular}
+\newpage
+
+\subsubsection{Classes and Data Structures}
+Here are the two classes I will be using for now, each class has a set of attributes and methods associated with them. I will be using the linked list data structure to maintain the order of transactions within each category (by date) as I think that will be most effective despite having to access data in a linear fashion.
+\begin{figure}[H]
+    \centering
+    \includesvg[width=0.7\linewidth]{FHClassDiagram}
+    \caption{Diagrams of the Transaction and Category Classes}
+    \label{fig:ClassDiagram}
+\end{figure}
+
+\subsection{Test Data}
+I will be planning some test data to use both as the program is being developed and after it has been implemented. This will ensure that I have a complete and fully working program for users to test easily.\newline
+\begin{longtable}{|p{3cm}|p{2cm}|p{3cm}|p{4cm}|}
+    \hline
+    Test & Type & Expected & Explanation\\
+    \hline
+    Amount form filled by using letters and symbols & Erroneous & Error message displayed & If the user accidentally enters a character other than numbers (excluding one decimal point) then it shouldn't be accepted.\\
+    \hline
+    Amount form filled in only using negative numbers & Erroneous & Error message displayed & Make sure that no negative numbers are entered since that defeats the logic of the program.\\
+    \hline
+    Amount form filled in only using non-negative numbers (both whole and decimal) & Normal (+) \& boundary (0) & Input is accepted, and stored as a new transaction. & Shows that the amount form works correctly.\\
+    \hline
+    Category form submitted empty & Erroneous & Error message telling the user to put at least one character before submitting is displayed. & The category form should accept any form of input except empty.\\
+    \hline
+    Category form submitted non-empty & Normal & A new object of the category class is created with the name, the (linked) list of transactions should be initialized as empty and the object should be stored. & Shows that the category form does what it is supposed to do.\\
+    \hline
+    Budget form submitted with non-negative numbers & Normal (+) \& Boundary (0) & Should accept the input and replace the current max budget with the new one. & This shows that the budget form works as intended with the data that it is intended to process.\\
+    \hline
+    Budget form submitted with negative numbers and non numbers & Erroneous & Error message displayed & Ensures that the user doesn't see things like \textit{budget progress: 10.0/apple}\\
+    \hline
+    Select date on calendar & Normal & the date should be highlighted, submitting an amount form will create a transaction object with the date as the selected date. & Ensure that the calendar is linked with the forms.\\
+    \hline
+    Select transaction (from list) and remove & Normal & The transaction should disappear from the table, and be removed internally & The user should be able to delete transactions that have mistakes in them.\\
+    \hline
+    Select start and end date on calendar & Normal & The statistics, graph and pie chart should update to reflect the data that is in that time frame. & Ensure that the summary page is working and displays correct data.\\
+    \hline
+    Edit transactions button or view summary button pressed & Normal & Should take the user to the correct page. & Navigating forward in the application should work as intended.\\
+    \hline
+    Back buttons pressed & Normal & Should take the user back to the main page & Navigating backwards should work as intended.\\
+    \hline
+\end{longtable}
+
+\section{Implementation}
+I will be using GitHub, screenshots and comments in the code to document the implementation process, this includes, bug encounters, testing and implementing new features.
+
 \newpage % Perhaps delete this once project is over to see if it looks better, otherwise keep.
 \section{Archive of Figures}
 A list of all figures in this document.
@@ -246,17 +382,27 @@ Tap on a figure to go to it.
 \begin{itemize}
     \item \jumpTo{\textit{\hyperref[fig:FHDecomp]{Figure 1}}}: Decomposition Diagram
     \item \jumpTo{\textit{\hyperref[fig:ModularDAG]{Figure 2}}}: Visualization of modularization using a DAG
+    \item \jumpTo{\textit{\hyperref[fig:SystemsDiagram]{Figure 3}}}: Systems Architecture Diagram
+    \item \jumpTo{\textit{\hyperref[fig:MainPage]{Figure 4}}}: Main Page Flowchart
+    \item \jumpTo{\textit{\hyperref[fig:DataPage]{Figure 5}}}: Data Page Flowchart
+    \item \jumpTo{\textit{\hyperref[fig:Delete]{Figure 6}}}: Delete Data Logic
+    \item \jumpTo{\textit{\hyperref[fig:SummaryPage]{Figure 7}}}: Summary Page Flowchart
+    \item \jumpTo{\textit{\hyperref[fig:PageDesign]{Figure 8}}}: Design of Application Pages
+    \item \jumpTo{\textit{\hyperref[fig:ClassDiagram]{Figure 9}}}: Class Diagrams of Transaction and Category.
 \end{itemize}
 
-\section{Citations (Sources)}
+\section{Citations}
 \textbf{Diagrams:}
 \begin{itemize}
-    \item \textit{Figures 1 \& 2}: Made with \textbf{Draw.io}
+    \item \textit{Figures 1 - 7}: Made with \textbf{Draw.io}
+    \item \textit{Figure 8}: Made by \textbf{me}
+    \item \textit{Figure 9}: Made with \textbf{Draw.io}
 \end{itemize}
 \textbf{Research:}
 \begin{itemize}
     \item \textit{Swift UI Research}: "\textbf{Get Started with Apps}" and "\textbf{Keep Going with Apps}" on \textbf{Swift Playground} (Mac)
     \item \textit{Swift Graphs and Pie Charts Research}: Apple developer documentation on \href{https://developer.apple.com/documentation/charts}{\jumpTo{\textit{Charts framework}}}
+    \item \textit{Swift Data Persistence Research}: Apple developer documentation on \href{https://developer.apple.com/documentation/swiftdata}{\jumpTo{\textit{SwiftData framwork}}}
 \end{itemize}
 
 
