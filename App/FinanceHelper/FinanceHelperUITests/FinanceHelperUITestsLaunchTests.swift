@@ -1,10 +1,3 @@
-//
-//  FinanceHelperUITestsLaunchTests.swift
-//  FinanceHelperUITests
-//
-//  Created by Johnson Chen on 01/08/2026.
-//
-
 import XCTest
 
 final class FinanceHelperUITestsLaunchTests: XCTestCase {

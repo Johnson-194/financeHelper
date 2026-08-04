@@ -1,10 +1,3 @@
-//
-//  FinanceHelperTests.swift
-//  FinanceHelperTests
-//
-//  Created by Johnson Chen on 01/08/2026.
-//
-
 import Testing
 @testable import FinanceHelper
 
