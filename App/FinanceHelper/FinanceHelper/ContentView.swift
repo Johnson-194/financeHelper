@@ -8,6 +8,7 @@ struct ContentView: View {
             Text("Finance Tracker")
                 .font(.largeTitle)
                 .fontWeight(.bold)
+                .padding()
             
             // Stub: Add Budget Progress
             
