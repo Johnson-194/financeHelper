@@ -27,7 +27,6 @@ final class Category {
                 transactions.remove(at: currIndex)
                 break // If there are identical transactions, we just remove the first one.
             }
-            
             currIndex += 1
         }
     }
