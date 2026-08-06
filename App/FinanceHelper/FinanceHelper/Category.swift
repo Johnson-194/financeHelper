@@ -4,11 +4,36 @@ import SwiftData
 @Model // So that we can store this
 final class Category {
     private var name: String
-    private var transactions: Array<Transaction> // Mutable array
+    private(set) var transactions: Array<Transaction> // Mutable array but read only to outsiders of the class
     
-    
-    init(name: String) {
+    init(_ name: String) {
         self.name = name
         self.transactions = []
     }
+    
+    func getName() -> String {
+        return name
+    }
+    
+    func addTransaction(date: Date, amount: Decimal) {
+        transactions.append(Transaction(date, amount))
+    }
+    
+    func removeTransaction(date: Date, amount: Decimal) {
+        var currIndex = 0
+        
+        for transact in transactions {
+            if transact.getDate() == date && transact.getAmount() == amount {
+                transactions.remove(at: currIndex)
+                break // If there are identical transactions, we just remove the first one.
+            }
+            
+            currIndex += 1
+        }
+    }
+    
+    func getTransactionsofDate(_ date: Date) -> Array<Transaction> {
+        return transactions.filter { $0.getDate() == date } // $0 is like the lambda function's "it" keyword in Kotlin.
+    }
+    // Note: Maybe I will make functions to return only the amounts of transactions to make things easier/clearer for calculating statistics.
 }
