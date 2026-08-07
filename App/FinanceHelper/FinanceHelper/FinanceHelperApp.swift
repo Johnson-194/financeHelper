@@ -4,6 +4,8 @@ import SwiftData
 @main
 struct FinanceHelperApp: App {
     var body: some Scene {
-
+        WindowGroup {
+            DataPage()
+        }
     }
 }
