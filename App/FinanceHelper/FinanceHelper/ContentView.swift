@@ -4,21 +4,44 @@ import SwiftData
 struct ContentView: View {
     var body: some View {
         VStack {
-            // Title:
-            Text("Finance Tracker")
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .padding()
-            
-            // Stub: Add Budget Progress
-            
-            // UI Navigation:
-            HStack {
-                Button("Edit Data") {
-                    // Stub: Navigate to Edit Data Page
+            TabView {
+                VStack {
+                    // Title:
+                    Text("Finance Tracker")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .padding()
+                    
+                    // Stub: Add Budget Progress
+
                 }
-                Button("View Summary") {
-                    // Stub: Navigate to Summary Page
+                .tabItem() {
+                    Image(systemName: "house.fill")
+                    Text("Home")
+                }
+                
+                VStack {
+                    DataPage()
+                }
+                .tabItem() {
+                    Image(systemName: "plus")
+                    Text("Edit Data")
+                }
+                
+                VStack {
+                    // STUB: Navigate to Summary Page
+                }
+                .tabItem() {
+                    Image(systemName: "chart.bar")
+                    Text("Summary")
+                }
+                
+                VStack {
+                    // STUB: Navigate to Settings
+                }
+                .tabItem() {
+                    Image(systemName: "gear")
+                    Text("Settings")
                 }
             }
         }

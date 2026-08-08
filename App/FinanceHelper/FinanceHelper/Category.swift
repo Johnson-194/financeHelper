@@ -4,11 +4,12 @@ import SwiftData
 @Model // So that we can store this
 final class Category {
     private var name: String
-    private(set) var transactions: Array<Transaction> // Mutable array but read only to outsiders of the class
+    
+    @Relationship(deleteRule: .cascade) // Ensures that if the category is deleted then the transactions that is inside the category is also deleted
+    private(set) var transactions: Array<Transaction> = [] // Mutable array but read only to outsiders of the class
     
     init(_ name: String) {
         self.name = name
-        self.transactions = []
     }
     
     func getName() -> String {
