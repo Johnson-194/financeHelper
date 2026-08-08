@@ -1,6 +1,12 @@
 import SwiftUI
 import SwiftData
 
+// Used to differentiate between amount and category text fields
+enum Field {
+    case amount
+    case category
+}
+
 struct DataPage: View {
     @State private var amount = ""
     @State private var isValidAmount = true
@@ -9,10 +15,16 @@ struct DataPage: View {
     
     @State private var category: String?
     @State private var isValidCategory = true
-    private var categories: Array<Category> = [Category("Groceries"), Category("Fun")]
+    @State private var addCategoryName = ""
+    @State private var validCategoryName = true
+    @State private var editCategorySuccess = false
+    
+    // Persistent store of categories
+    @Query private var categories: Array<Category> // Get Data from database
+    @Environment(\.modelContext) private var model // Get the database so we can store into it
     
     // Keyboard:
-    @FocusState private var isFocused: Bool // Initially false due to property wrapper
+    @FocusState private var focusedField: Field? // Initially Nil
     @State private var addSuccess: Bool = false
     
     
@@ -20,7 +32,7 @@ struct DataPage: View {
         ZStack {
             Color(.white)
                 .onTapGesture {
-                    isFocused = false
+                    focusedField = nil
                 }
             VStack {
                 Text("Add Data")
@@ -33,7 +45,7 @@ struct DataPage: View {
                 TextField("Amount", text: $amount)
                     .frame(width: 300)
                     .keyboardType(.decimalPad) // So phone users can only see a number pad with decimal
-                    .focused($isFocused) // So keyboard can disappear
+                    .focused($focusedField, equals: .amount) // So keyboard can disappear
                     .onChange(of: amount) { old, new in
                             if new.filter({ $0 == "." }).count > 1 {
                                 amount = old
@@ -99,6 +111,63 @@ struct DataPage: View {
                 
                 if (addSuccess) {
                     Text("Transaction added!").foregroundStyle(.green)
+                }
+                
+                Spacer().frame(height: 30)
+                
+                // Add/Remove Category Feature:
+                Text("Edit Categories")
+                    .font(.title)
+                TextField("Category Name", text: $addCategoryName)
+                    .frame(width: 300)
+                    .focused($focusedField, equals: .category)
+                
+                Spacer().frame(height: 10)
+                
+                VStack(alignment: .leading) {
+                    Button("Add Category") {
+                        let listOfNames = categories.map { $0.getName() }
+                        // If we already have a category with the same name (ignore case), or the name is empty
+                        if (listOfNames.contains { $0.caseInsensitiveCompare(addCategoryName) == .orderedSame } || addCategoryName == "") {
+                            validCategoryName = false
+                            editCategorySuccess = false
+                        } else {
+                            validCategoryName = true
+                            model.insert(Category(addCategoryName)) // Place the category into the database
+                            editCategorySuccess = true
+                        }
+                    }
+                    Button("Remove Category") {
+                        let listOfNames = categories.map { $0.getName() }
+                        
+                        if (!listOfNames.contains { $0.caseInsensitiveCompare(addCategoryName) == .orderedSame } || addCategoryName == "") {
+                            validCategoryName = false
+                            editCategorySuccess = false
+                        } else {
+                            for i in categories.indices {
+                                if (categories[i].getName().lowercased() == addCategoryName.lowercased()) {
+                                    validCategoryName = true
+                                    model.delete(categories[i])
+                                    editCategorySuccess = true
+                                    break
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                
+                if (!validCategoryName) {
+                    VStack() {
+                        Text("ERR due to one of the following:")
+                            .bold()
+                        Text("Field is empty")
+                        Text("Attempted to add an already existing category")
+                        Text("Attempted to remove a non existent category")
+                    }.foregroundStyle(.red)
+                }
+                if (editCategorySuccess) {
+                    Text("Success!").foregroundStyle(.green)
                 }
             }
             .padding()
