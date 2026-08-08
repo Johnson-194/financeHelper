@@ -3,13 +3,17 @@ import SwiftData
 
 struct DataPage: View {
     @State private var amount = ""
+    @State private var isValidAmount = true
+    
     @State private var selectedDate = Date() // Date() sets it to the current date
     
     @State private var category: String?
-    private var categories = ["Food", "Groceries", "Entertainment", "Clothing", "Transportation", "Savings", "Other"]
+    @State private var isValidCategory = true
+    private var categories: Array<Category> = [Category("Groceries"), Category("Fun")]
     
     // Keyboard:
     @FocusState private var isFocused: Bool // Initially false due to property wrapper
+    @State private var addSuccess: Bool = false
     
     
     var body: some View {
@@ -36,18 +40,65 @@ struct DataPage: View {
                             } else if new.contains(where: { !$0.isNumber && $0 != "." }) {
                                 amount = old
                             }
-                        } // Validation check: We only allow empty field or valid decimal numbers
+                            var foundDecimal = false
+                            var numDP = 0
+                            for digit in new {
+                                if digit == "." {
+                                    foundDecimal = true
+                                }
+                                if (foundDecimal && digit != ".") {
+                                    numDP += 1
+                                    if (numDP > 2) {
+                                        amount = old
+                                        break
+                                    }
+                                }
+                            }
+                    } // Validation check: We only allow empty field or valid decimal numbers
                 
                 Picker("Category", selection: $category) {
                     Text("Select Category").tag(nil as String?)
-                    ForEach(categories.sorted(), id: \.self) { category in
+                    ForEach(categories.map { $0.getName() }.sorted(), id: \.self) { category in
                         Text(category).tag(category as String?)
                     }
                 }
                 .pickerStyle(.menu)
                 
                 Button("Add Transaction") {
+                    // Note: When allowing user to add category, do not let them add empty string name.
+                    if (categories.map{ $0.getName() }.contains(category ?? "")) {
+                        isValidCategory = true
+                    } else {
+                        isValidCategory = false
+                    }
+                    if (amount != "") {
+                        isValidAmount = true
+                    } else {
+                        isValidAmount = false
+                    }
                     
+                    if (isValidAmount && isValidCategory) {
+                        // We know amount and category isn't nil now so what ever we do with them will not produce nil (as amount already has a validation check), hence can use assertion safely.
+                        for c in categories {
+                            if (c.getName() == category!) {
+                                c.addTransaction(date: selectedDate, amount: Decimal(string: amount)!)
+                                addSuccess = true
+                                break // Category names will be unique
+                            }
+                        }
+                    } else {
+                        addSuccess = false
+                    }
+                }
+                
+                if (!isValidAmount) {
+                    Text("Please enter an amount.").foregroundStyle(.red)
+                } else if (!isValidCategory) {
+                    Text("Please choose a category.").foregroundStyle(.red)
+                }
+                
+                if (addSuccess) {
+                    Text("Transaction added!").foregroundStyle(.green)
                 }
             }
             .padding()
