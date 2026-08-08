@@ -41,6 +41,7 @@ struct DataPage: View {
                             .onTapGesture {
                                 focusedField = nil
                             }
+                        
                         VStack {
                             Text("Add Data")
                                 .font(.largeTitle)
@@ -125,6 +126,11 @@ struct DataPage: View {
                 
                 NavigationLink("Edit Categories") {
                     ZStack {
+                        Color(.white)
+                            .onTapGesture {
+                                focusedField = nil
+                            }
+                        
                         VStack {
                             Text("Edit Categories")
                                 .font(.title)
@@ -157,6 +163,7 @@ struct DataPage: View {
                                         if (categories[i].getName().lowercased() == addCategoryName.lowercased()) {
                                             validCategoryName = true
                                             model.delete(categories[i])
+                                            category = nil
                                             editCategorySuccess = true
                                             break
                                         }
