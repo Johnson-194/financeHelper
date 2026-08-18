@@ -31,10 +31,6 @@ struct DataPage: View {
     var body: some View {
         NavigationSplitView {
             List {
-                NavigationLink("View Transactions") {
-                    ViewTransactions()
-                }
-                
                 NavigationLink("Edit Transactions") {
                     ZStack {
                         Color(.white)

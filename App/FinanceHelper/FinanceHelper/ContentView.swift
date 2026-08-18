@@ -29,7 +29,7 @@ struct ContentView: View {
                 }
                 
                 VStack {
-                    // STUB: Navigate to Summary Page
+                    SummaryPage()
                 }
                 .tabItem() {
                     Image(systemName: "chart.bar")
