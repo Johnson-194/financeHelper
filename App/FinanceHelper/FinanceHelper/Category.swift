@@ -4,11 +4,12 @@ import SwiftData
 @Model // So that we can store this
 final class Category {
     private var name: String
-    private(set) var transactions: Array<Transaction> // Mutable array but read only to outsiders of the class
+    
+    @Relationship(deleteRule: .cascade) // Ensures that if the category is deleted then the transactions that is inside the category is also deleted
+    private(set) var transactions: Array<Transaction> = [] // Mutable array but read only to outsiders of the class
     
     init(_ name: String) {
         self.name = name
-        self.transactions = []
     }
     
     func getName() -> String {
@@ -16,20 +17,7 @@ final class Category {
     }
     
     func addTransaction(date: Date, amount: Decimal) {
-        transactions.append(Transaction(date, amount))
-    }
-    
-    func removeTransaction(date: Date, amount: Decimal) {
-        var currIndex = 0
-        
-        for transact in transactions {
-            if transact.getDate() == date && transact.getAmount() == amount {
-                transactions.remove(at: currIndex)
-                break // If there are identical transactions, we just remove the first one.
-            }
-            
-            currIndex += 1
-        }
+        transactions.append(Transaction(date, amount, name))
     }
     
     func getTransactionsofDate(_ date: Date) -> Array<Transaction> {
