@@ -17,19 +17,7 @@ final class Category {
     }
     
     func addTransaction(date: Date, amount: Decimal) {
-        transactions.append(Transaction(date, amount))
-    }
-    
-    func removeTransaction(date: Date, amount: Decimal) {
-        var currIndex = 0
-        
-        for transact in transactions {
-            if transact.getDate() == date && transact.getAmount() == amount {
-                transactions.remove(at: currIndex)
-                break // If there are identical transactions, we just remove the first one.
-            }
-            currIndex += 1
-        }
+        transactions.append(Transaction(date, amount, name))
     }
     
     func getTransactionsofDate(_ date: Date) -> Array<Transaction> {

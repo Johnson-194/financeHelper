@@ -95,9 +95,13 @@ struct DataPage: View {
                                 
                                 if (isValidAmount && isValidCategory) {
                                     // We know amount and category isn't nil now so what ever we do with them will not produce nil (as amount already has a validation check), hence can use assertion safely.
+                                    // Adding a transaction to categories automatically stores it in the database since category is stored and we specified transaction is also part of the model context
                                     for c in categories {
                                         if (c.getName() == category!) {
-                                            c.addTransaction(date: selectedDate, amount: Decimal(string: amount)!)
+                                            c.addTransaction(
+                                                date: selectedDate,
+                                                amount: Decimal(string: amount)!
+                                            )
                                             addSuccess = true
                                             break // Category names will be unique
                                         }
